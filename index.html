@@ -81,6 +81,14 @@
         ctx.fillText("Score: " + score, 8, 20);
       }
 
+      // game lives
+      var lives = 4;
+      function drawLives() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+      }
+
       // add mouse listening event
       document.addEventListener("mousemove", mouseMoveHandler, false);
       function mouseMoveHandler(e) {
@@ -173,6 +181,7 @@
         drawBricks();
         collisionDetection();
         drawScore();
+        drawLives();
 
         // if (y + dy > canvas.height || y + dy < 0) {
         //   dy = -dy;
@@ -193,9 +202,19 @@
           if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
           } else {
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(interval);
+            // decrement lives and checking to see if lives == 0 then GAME OVER or reset
+            lives--;
+            if (!lives) {
+              alert("GAME OVER");
+              document.location.reload();
+              // clearInterval(interval); // Needed for Chrome to end game
+            } else {
+              x = canvas.width / 2;
+              y = canvas.height - 30;
+              dx = 2;
+              dy = -2;
+              paddleX = (canvas.width - paddleWidth) / 2;
+            }
           }
         }
 
@@ -219,9 +238,11 @@
 
         // console.log("y", y);
         // console.log("xx", x);
+        requestAnimationFrame(draw);
       }
 
-      var interval = setInterval(draw, 10);
+      // var interval = setInterval(draw, 10);
+      draw();
     </script>
   </body>
 </html>
