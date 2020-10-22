@@ -81,6 +81,15 @@
         ctx.fillText("Score: " + score, 8, 20);
       }
 
+      // add mouse listening event
+      document.addEventListener("mousemove", mouseMoveHandler, false);
+      function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if (relativeX > 0 && relativeX < canvas.width) {
+          paddleX = relativeX - paddleWidth / 2;
+        }
+      }
+
       // paddle
       var paddleHeight = 10;
       var paddleWidth = 75;
@@ -91,7 +100,6 @@
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
-
       function keyDownHandler(e) {
         if (e.key == "Right" || e.key == "ArrowRight") {
           rightPressed = true;
@@ -99,7 +107,6 @@
           leftPressed = true;
         }
       }
-
       function keyUpHandler(e) {
         if (e.key == "Right" || e.key == "ArrowRight") {
           rightPressed = false;
