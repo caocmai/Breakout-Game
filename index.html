@@ -73,6 +73,14 @@
         }
       }
 
+      // score
+      var score = 0;
+      function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Score: " + score, 8, 20);
+      }
+
       // paddle
       var paddleHeight = 10;
       var paddleWidth = 75;
@@ -136,6 +144,14 @@
                 dy = -dy;
                 // updating the brick status as 0
                 b.status = 0;
+                // update score
+                score++;
+                // checking to see if you've won
+                if (score == brickRowCount * brickColumnCount) {
+                  alert("YOU WIN, CONGRATULATIONS!");
+                  document.location.reload();
+                  clearInterval(interval); // Needed for Chrome to end game
+                }
               }
             }
           }
@@ -149,6 +165,7 @@
         drawPaddle();
         drawBricks();
         collisionDetection();
+        drawScore();
 
         // if (y + dy > canvas.height || y + dy < 0) {
         //   dy = -dy;
