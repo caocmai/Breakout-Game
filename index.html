@@ -22,50 +22,47 @@
 
     <script>
       // JavaScript code goes here
-      var canvas = document.getElementById("myCanvas");
-      var ctx = canvas.getContext("2d");
+      const canvas = document.getElementById('myCanvas');
+      const ctx = canvas.getContext('2d');
 
-      var x = canvas.width / 2;
-      var y = canvas.height - 30;
+      let x = canvas.width / 2;
+      let y = canvas.height - 30;
 
-      var dx = 4;
-      var dy = 4;
+      let dx = 4;
+      let dy = 4;
 
-      var ballRadius = 10;
+      const ballRadius = 10;
 
       // brick
-      var brickRowCount = 3;
-      var brickColumnCount = 5;
-      var brickWidth = 75;
-      var brickHeight = 20;
-      var brickPadding = 10;
-      var brickOffsetTop = 30;
-      var brickOffsetLeft = 30;
+      const brickRowCount = 3;
+      const brickColumnCount = 5;
+      const brickWidth = 75;
+      const brickHeight = 20;
+      const brickPadding = 10;
+      const brickOffsetTop = 30;
+      const brickOffsetLeft = 30;
 
-      var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-      var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-
-      var bricks = [];
-      for (var c = 0; c < brickColumnCount; c++) {
+      const bricks = [];
+      for (let c = 0; c < brickColumnCount; c += 1) {
         bricks[c] = [];
-        for (var r = 0; r < brickRowCount; r++) {
+        for (let r = 0; r < brickRowCount; r += 1) {
           // bricks[c][r] = { x: 0, y: 0 };
           bricks[c][r] = { x: 0, y: 0, status: 1 };
         }
       }
 
       function drawBricks() {
-        for (var c = 0; c < brickColumnCount; c++) {
-          for (var r = 0; r < brickRowCount; r++) {
+        for (let c = 0; c < brickColumnCount; c += 1) {
+          for (let r = 0; r < brickRowCount; r += 1) {
             // only draw bricks with status as 1
-            if (bricks[c][r].status == 1) {
-              var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-              var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+            if (bricks[c][r].status === 1) {
+              const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+              const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
               bricks[c][r].x = brickX;
               bricks[c][r].y = brickY;
               ctx.beginPath();
               ctx.rect(brickX, brickY, brickWidth, brickHeight);
-              ctx.fillStyle = "#0095DD";
+              ctx.fillStyle = '#0095DD';
               ctx.fill();
               ctx.closePath();
             }
@@ -74,54 +71,55 @@
       }
 
       // score
-      var score = 0;
+      let score = 0;
       function drawScore() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
-        ctx.fillText("Score: " + score, 8, 20);
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#0095DD';
+        ctx.fillText(`Score: ${score}`, 8, 20);
       }
 
       // game lives
-      var lives = 5;
+      let lives = 5;
       function drawLives() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
-        ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#0095DD';
+        ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
       }
+      
+      // paddle
+      const paddleHeight = 10;
+      const paddleWidth = 75;
+      let paddleX = (canvas.width - paddleWidth) / 2;
+
+      let rightPressed = false;
+      let leftPressed = false;
 
       // add mouse listening event
-      document.addEventListener("mousemove", mouseMoveHandler, false);
       function mouseMoveHandler(e) {
-        var relativeX = e.clientX - canvas.offsetLeft;
+        const relativeX = e.clientX - canvas.offsetLeft;
         if (relativeX > 0 && relativeX < canvas.width) {
           paddleX = relativeX - paddleWidth / 2;
         }
       }
+      document.addEventListener('mousemove', mouseMoveHandler, false);
 
-      // paddle
-      var paddleHeight = 10;
-      var paddleWidth = 75;
-      var paddleX = (canvas.width - paddleWidth) / 2;
-
-      var rightPressed = false;
-      var leftPressed = false;
-
-      document.addEventListener("keydown", keyDownHandler, false);
-      document.addEventListener("keyup", keyUpHandler, false);
       function keyDownHandler(e) {
-        if (e.key == "Right" || e.key == "ArrowRight") {
+        if (e.key === 'Right' || e.key === 'ArrowRight') {
           rightPressed = true;
-        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+        } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
           leftPressed = true;
         }
       }
       function keyUpHandler(e) {
-        if (e.key == "Right" || e.key == "ArrowRight") {
+        if (e.key === 'Right' || e.key === 'ArrowRight') {
           rightPressed = false;
-        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+        } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
           leftPressed = false;
         }
       }
+
+      document.addEventListener('keydown', keyDownHandler, false);
+      document.addEventListener('keyup', keyUpHandler, false);
 
       function drawPaddle() {
         ctx.beginPath();
@@ -129,9 +127,9 @@
           paddleX,
           canvas.height - paddleHeight,
           paddleWidth,
-          paddleHeight
+          paddleHeight,
         );
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = '#0095DD';
         ctx.fill();
         ctx.closePath();
       }
@@ -139,31 +137,31 @@
       function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = '#0095DD';
         ctx.fill();
         ctx.closePath();
       }
 
       // collision detection
       function collisionDetection() {
-        for (var c = 0; c < brickColumnCount; c++) {
-          for (var r = 0; r < brickRowCount; r++) {
-            var b = bricks[c][r];
-            if (b.status == 1) {
+        for (let c = 0; c < brickColumnCount; c += 1) {
+          for (let r = 0; r < brickRowCount; r += 1) {
+            const b = bricks[c][r];
+            if (b.status === 1) {
               if (
-                x > b.x &&
-                x < b.x + brickWidth &&
-                y > b.y &&
-                y < b.y + brickHeight
+                x > b.x
+          && x < b.x + brickWidth
+          && y > b.y
+          && y < b.y + brickHeight
               ) {
                 dy = -dy;
                 // updating the brick status as 0
                 b.status = 0;
                 // update score
-                score++;
+                score += 1;
                 // checking to see if you've won
-                if (score == brickRowCount * brickColumnCount) {
-                  alert("YOU WIN, CONGRATULATIONS!");
+                if (score === brickRowCount * brickColumnCount) {
+                  alert('YOU WIN, CONGRATULATIONS!');
                   document.location.reload();
                   clearInterval(interval); // Needed for Chrome to end game
                 }
@@ -203,9 +201,9 @@
             dy = -dy;
           } else {
             // decrement lives and checking to see if lives == 0 then GAME OVER or reset
-            lives--;
+            lives -= 1;
             if (!lives) {
-              alert("GAME OVER");
+              alert('GAME OVER');
               document.location.reload();
               // clearInterval(interval); // Needed for Chrome to end game
             } else {
