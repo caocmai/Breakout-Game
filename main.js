@@ -11,9 +11,9 @@ let dy = 4;
 const ballRadius = 10;
 
 // brick
-const brickRowCount = 3;
-const brickColumnCount = 5;
-const brickWidth = 75;
+const brickRowCount = 4;
+const brickColumnCount = 8;
+const brickWidth = 43;
 const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
@@ -37,9 +37,23 @@ function drawBricks() {
         const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
+
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
+
+        switch (r) {
+          case 1:
+            ctx.fillStyle = '#7a1777';
+            break;
+          case 2:
+            ctx.fillStyle = '#ba254d';
+            break;
+          case 3:
+            ctx.fillStyle = '#3d34bf';
+            break;
+          default:
+            ctx.fillStyle = '#0095DD';
+        }
         ctx.fill();
         ctx.closePath();
       }
@@ -106,7 +120,7 @@ function drawPaddle() {
     paddleWidth,
     paddleHeight,
   );
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#eb4034';
   ctx.fill();
   ctx.closePath();
 }
@@ -114,7 +128,7 @@ function drawPaddle() {
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#2ab855';
   ctx.fill();
   ctx.closePath();
 }
