@@ -27,7 +27,13 @@ for (let c = 0; c < brickColumnCount; c += 1) {
     // bricks[c][r] = { x: 0, y: 0 };
     const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
     const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-    bricks[c][r] = { x: brickX, y: brickY, status: 1 };
+    bricks[c][r] = {
+      x: brickX,
+      y: brickY,
+      brickWidth,
+      brickHeight,
+      status: 1,
+    };
   }
 }
 
@@ -38,7 +44,7 @@ function drawBricks() {
       // only draw bricks with status as 1
       if (bricks[c][r].status === 1) {
         ctx.beginPath();
-        ctx.rect(bricks[c][r].x, bricks[c][r].y, brickWidth, brickHeight);
+        ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
 
         switch (r) {
           case 1:
