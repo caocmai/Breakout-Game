@@ -5,8 +5,8 @@ const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 // brick properties
 const brickRowCount = 4;
-const brickColumnCount = 8;
-const brickWidth = 43;
+const brickColumnCount = 6;
+const brickWidth = 60;
 const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
@@ -88,6 +88,13 @@ function drawBricks() {
         ctx.beginPath();
         ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
         ctx.fillStyle = '#eb4034';
+        ctx.fill();
+        ctx.closePath();
+      }
+      else if (bricks[c][r].status === 1) {
+        ctx.beginPath();
+        ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+        ctx.fillStyle = '#f5e642';
         ctx.fill();
         ctx.closePath();
       }
