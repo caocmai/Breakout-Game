@@ -82,16 +82,13 @@ function drawBricks() {
         ctx.fillStyle = bricks[c][r].color;
         ctx.fill();
         ctx.closePath();
-      }
-
-      else if (bricks[c][r].status === 2) {
+      } else if (bricks[c][r].status === 2) {
         ctx.beginPath();
         ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
         ctx.fillStyle = '#eb4034';
         ctx.fill();
         ctx.closePath();
-      }
-      else if (bricks[c][r].status === 1) {
+      } else if (bricks[c][r].status === 1) {
         ctx.beginPath();
         ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
         ctx.fillStyle = '#f5e642';
@@ -135,10 +132,8 @@ function mouseMoveHandler(e) {
   if (relativeX > 0 && relativeX < canvas.width) {
     paddleX = relativeX - paddleWidth / 2;
   }
-
   // doesn't currently work
   drawPaddle();
-  
 }
 
 function keyDownHandler(e) {
