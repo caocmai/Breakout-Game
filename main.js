@@ -1,3 +1,5 @@
+import Ball from './Ball.js';
+
 /*
   CONSTANTS
 */
@@ -48,7 +50,7 @@ for (let c = 0; c < brickColumnCount; c += 1) {
         color = '#7a1777';
         break;
       case 2:
-        color= '#ba254d';
+        color = '#ba254d';
         break;
       case 3:
         color = '#3d34bf';
@@ -242,10 +244,14 @@ function collisionMovement() {
   y += dy;
 }
 
+const newball = new Ball(ballRadius, x, y, ctx);
+
 function draw() {
   // clear frame before next drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBall();
+  // ball();
+  newball.render(x, y);
+  // drawBall();
   drawPaddle();
   drawBricks();
   collisionDetection();
