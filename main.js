@@ -1,4 +1,5 @@
 import Ball from './js/Ball.js';
+import Paddle from './js/Paddle.js';
 
 /*
   CONSTANTS
@@ -74,6 +75,7 @@ for (let c = 0; c < brickColumnCount; c += 1) {
 */
 
 const newball = new Ball(ballRadius, x, y);
+const newPaddle = new Paddle(paddleWidth, paddleHeight, canvas.height, paddleX);
 
 // draws/redraws bricks based on wether ball has hit block
 function drawBricks() {
@@ -134,7 +136,7 @@ function drawPaddle() {
 function mouseMoveHandler(e) {
   const relativeX = e.clientX - canvas.offsetLeft;
   if (relativeX > 0 && relativeX < canvas.width) {
-    paddleX = relativeX - paddleWidth / 2;
+    newPaddle.paddleX = relativeX - newPaddle.paddleWidth / 2;
   }
   // doesn't currently work
   drawPaddle();
@@ -223,7 +225,7 @@ function collisionMovement() {
   if (newball.y + dy < ballRadius) {
     dy = -dy;
   } else if (newball.y + dy > canvas.height - ballRadius) {
-    if (newball.x > paddleX && newball.x < paddleX + paddleWidth) {
+    if (newball.x > newPaddle.paddleX && newball.x < newPaddle.paddleX + newPaddle.paddleWidth) {
       dy = -dy;
     } else {
       // decrement lives and checking to see if lives == 0 then GAME OVER or reset
@@ -237,7 +239,7 @@ function collisionMovement() {
         newball.y = canvas.height - 30;
         dx = -dx;
         dy = -dy;
-        paddleX = (canvas.width - paddleWidth) / 2;
+        newPaddle.paddleX = (canvas.width - newPaddle.paddleWidth) / 2;
       }
     }
   }
@@ -253,7 +255,8 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   newball.render(ctx);
   // drawBall();
-  drawPaddle();
+  // drawPaddle();
+  newPaddle.render(ctx);
   drawBricks();
   collisionDetection();
   drawScore();
@@ -268,7 +271,7 @@ function draw() {
   // }
   collisionMovement();
 
-  changePaddleDirection();
+  // changePaddleDirection();
 
   // this continues with animation else commented out will just draw once
   requestAnimationFrame(draw);
