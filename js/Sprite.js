@@ -1,8 +1,7 @@
 class Sprite {
-  constructor(x, y, ctx) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.ctx = ctx;
   }
 
   moveTo(x, y) {

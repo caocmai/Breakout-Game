@@ -1,4 +1,4 @@
-import Ball from './Ball.js';
+import Ball from './js/Ball.js';
 
 /*
   CONSTANTS
@@ -72,6 +72,8 @@ for (let c = 0; c < brickColumnCount; c += 1) {
 /*
   FUNCTIONS
 */
+
+const newball = new Ball(ballRadius, x, y);
 
 // draws/redraws bricks based on wether ball has hit block
 function drawBricks() {
@@ -173,10 +175,10 @@ function collisionDetection() {
       const b = bricks[c][r];
       if (b.status === 1 || b.status === 2 || b.status === 3) {
         if (
-          x > b.x
-                && x < b.x + brickWidth
-                && y > b.y
-                && y < b.y + brickHeight
+          newball.x > b.x
+                && newball.x < b.x + brickWidth
+                && newball.y > b.y
+                && newball.y < b.y + brickHeight
         ) {
           dy = -dy;
           // updating the brick status as 0
@@ -213,15 +215,15 @@ function changePaddleDirection() {
 
 function collisionMovement() {
   // updated code so ball bounces off wall right after touch not half way in
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+  if (newball.x + dx > canvas.width - ballRadius || newball.x + dx < ballRadius) {
     // changes direction
     dx = -dx;
   }
 
-  if (y + dy < ballRadius) {
+  if (newball.y + dy < ballRadius) {
     dy = -dy;
-  } else if (y + dy > canvas.height - ballRadius) {
-    if (x > paddleX && x < paddleX + paddleWidth) {
+  } else if (newball.y + dy > canvas.height - ballRadius) {
+    if (newball.x > paddleX && newball.x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
       // decrement lives and checking to see if lives == 0 then GAME OVER or reset
@@ -231,8 +233,8 @@ function collisionMovement() {
         document.location.reload();
         // clearInterval(interval); // Needed for Chrome to end game
       } else {
-        x = canvas.width / 2;
-        y = canvas.height - 30;
+        newball.x = canvas.width / 2;
+        newball.y = canvas.height - 30;
         dx = -dx;
         dy = -dy;
         paddleX = (canvas.width - paddleWidth) / 2;
@@ -240,17 +242,16 @@ function collisionMovement() {
     }
   }
 
-  x += dx;
-  y += dy;
+  // console.log(newball.x, newball.y)
+  // newball.moveBy(dx, dy);
+  newball.x += dx;
+  newball.y += dy;
 }
-
-const newball = new Ball(ballRadius, x, y, ctx);
 
 function draw() {
   // clear frame before next drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // ball();
-  newball.render(x, y);
+  newball.render(ctx);
   // drawBall();
   drawPaddle();
   drawBricks();
