@@ -1,6 +1,8 @@
 import Ball from './js/Ball.js';
 import Paddle from './js/Paddle.js';
 import Brick from './js/Brick.js';
+import Lives from './js/Lives.js';
+import Score from './js/Score.js';
 
 /*
   CONSTANTS
@@ -79,6 +81,8 @@ for (let c = 0; c < brickColumnCount; c += 1) {
 
 const newball = new Ball(ballRadius, x, y);
 const newPaddle = new Paddle(paddleWidth, paddleHeight, canvas.height, paddleX);
+const newLives = new Lives(canvas.width - 65, 20, 3);
+const newScore = new Score(8, 20, 0);
 
 // draws/redraws bricks based on wether ball has hit block
 function drawBricks() {
@@ -194,10 +198,10 @@ function collisionDetection() {
           // updating the brick status as 0
           b.status -= 1;
           // update score
-          score += 25;
+          newScore.score += 25;
           // checking to see if you've won
-          if (score === (brickRowCount * brickColumnCount) * 25 * 3) {
-            alert(`YOU WIN, CONGRATULATIONS! SCORE: ${score}`);
+          if (newScore.score === (brickRowCount * brickColumnCount) * 25 * 3) {
+            alert(`YOU WIN, CONGRATULATIONS! SCORE: ${newScore.score}`);
             document.location.reload();
             // clearInterval(interval); // Needed for Chrome to end game
           }
@@ -237,9 +241,9 @@ function collisionMovement() {
       dy = -dy;
     } else {
       // decrement lives and checking to see if lives == 0 then GAME OVER or reset
-      lives -= 1;
-      if (!lives) {
-        alert(`GAME OVER SCORE: ${score}`);
+      newLives.lives -= 1;
+      if (!newLives.lives) {
+        alert(`GAME OVER SCORE: ${newScore.score}`);
         document.location.reload();
         // clearInterval(interval); // Needed for Chrome to end game
       } else {
@@ -267,8 +271,10 @@ function draw() {
   newPaddle.render(ctx);
   drawBricks();
   collisionDetection();
-  drawScore();
-  drawLives();
+  // drawScore();
+  // drawLives();
+  newLives.render(ctx);
+  newScore.render(ctx);
 
   // if (y + dy > canvas.height || y + dy < 0) {
   //   dy = -dy;
