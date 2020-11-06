@@ -1,14 +1,10 @@
 class Brick {
   constructor(brickWidth, brickHeight, status, brickColumnCount,
     brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop) {
-    // super(x, y);
     this.brickWidth = brickWidth;
     this.brickHeight = brickHeight;
-    // this.color = color;
-    // this.status = status;
 
     this.bricks = [];
-
     this.brickColumnCount = brickColumnCount;
     this.brickRowCount = brickRowCount;
     // this.brickPadding = brickPadding;
@@ -50,33 +46,12 @@ class Brick {
   render(ctx) {
     for (let c = 0; c < this.brickColumnCount; c += 1) {
       for (let r = 0; r < this.brickRowCount; r += 1) {
-        // only draw bricks with status as 1
-        // console.log('status', this.bricks[c][r].status)
-        
         if (this.bricks[c][r].status === 3) {
            this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, this.bricks[c][r].color);
-
-          // ctx.beginPath();
-          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-          // ctx.fillStyle = bricks[c][r].color;
-          // ctx.fill();
-          // ctx.closePath();
         } else if (this.bricks[c][r].status === 2) {
           this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, '#eb4034');
-
-          // ctx.beginPath();
-          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-          // ctx.fillStyle = '#eb4034';
-          // ctx.fill();
-          // ctx.closePath();
         } else if (this.bricks[c][r].status === 1) {
           this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, '#f5e642');
-
-          // ctx.beginPath();
-          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-          // ctx.fillStyle = '#f5e642';
-          // ctx.fill();
-          // ctx.closePath();
         }
       }
     }
