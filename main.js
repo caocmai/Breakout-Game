@@ -1,5 +1,6 @@
 import Ball from './js/Ball.js';
 import Paddle from './js/Paddle.js';
+import Brick from './js/Brick.js';
 
 /*
   CONSTANTS
@@ -59,14 +60,16 @@ for (let c = 0; c < brickColumnCount; c += 1) {
       default:
         color = '#0095DD';
     }
-    bricks[c][r] = {
-      x: brickX,
-      y: brickY,
-      brickWidth,
-      brickHeight,
-      color,
-      status: 3,
-    };
+    // bricks[c][r] = {
+    //   x: brickX,
+    //   y: brickY,
+    //   brickWidth,
+    //   brickHeight,
+    //   color,
+    //   status: 3,
+    // };
+
+    bricks[c][r] = new Brick(brickX, brickY, brickWidth, brickHeight, color, 3);
   }
 }
 
@@ -83,23 +86,28 @@ function drawBricks() {
     for (let r = 0; r < brickRowCount; r += 1) {
       // only draw bricks with status as 1
       if (bricks[c][r].status === 3) {
-        ctx.beginPath();
-        ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-        ctx.fillStyle = bricks[c][r].color;
-        ctx.fill();
-        ctx.closePath();
+        bricks[c][r].render(ctx, bricks[c][r].color);
+        // ctx.beginPath();
+        // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+        // ctx.fillStyle = bricks[c][r].color;
+        // ctx.fill();
+        // ctx.closePath();
       } else if (bricks[c][r].status === 2) {
-        ctx.beginPath();
-        ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-        ctx.fillStyle = '#eb4034';
-        ctx.fill();
-        ctx.closePath();
+        bricks[c][r].render(ctx, '#eb4034');
+
+        // ctx.beginPath();
+        // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+        // ctx.fillStyle = '#eb4034';
+        // ctx.fill();
+        // ctx.closePath();
       } else if (bricks[c][r].status === 1) {
-        ctx.beginPath();
-        ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-        ctx.fillStyle = '#f5e642';
-        ctx.fill();
-        ctx.closePath();
+        bricks[c][r].render(ctx, '#f5e642');
+
+        // ctx.beginPath();
+        // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+        // ctx.fillStyle = '#f5e642';
+        // ctx.fill();
+        // ctx.closePath();
       }
     }
   }
@@ -119,18 +127,18 @@ function drawLives() {
   ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
-function drawPaddle() {
-  ctx.beginPath();
-  ctx.rect(
-    paddleX,
-    canvas.height - paddleHeight,
-    paddleWidth,
-    paddleHeight,
-  );
-  ctx.fillStyle = `#eb403${paddleX + 10}`;
-  ctx.fill();
-  ctx.closePath();
-}
+// function drawPaddle() {
+//   ctx.beginPath();
+//   ctx.rect(
+//     paddleX,
+//     canvas.height - paddleHeight,
+//     paddleWidth,
+//     paddleHeight,
+//   );
+//   ctx.fillStyle = `#eb403${paddleX + 10}`;
+//   ctx.fill();
+//   ctx.closePath();
+// }
 
 // add mouse listening event and other events
 function mouseMoveHandler(e) {
@@ -139,7 +147,7 @@ function mouseMoveHandler(e) {
     newPaddle.paddleX = relativeX - newPaddle.paddleWidth / 2;
   }
   // doesn't currently work
-  drawPaddle();
+  // drawPaddle();
 }
 
 function keyDownHandler(e) {
@@ -189,7 +197,7 @@ function collisionDetection() {
           score += 25;
           // checking to see if you've won
           if (score === (brickRowCount * brickColumnCount) * 25 * 3) {
-            alert(`YOU WIN, CONGRATULATIONS! SCORE:${score}`);
+            alert(`YOU WIN, CONGRATULATIONS! SCORE: ${score}`);
             document.location.reload();
             // clearInterval(interval); // Needed for Chrome to end game
           }
@@ -201,17 +209,17 @@ function collisionDetection() {
 
 function changePaddleDirection() {
   if (rightPressed) {
-    paddleX += 7;
-    if (paddleX + paddleWidth > canvas.width) {
-      paddleX = canvas.width - paddleWidth;
+    newPaddle.paddleX += 7;
+    if (newPaddle.paddleX + newPaddle.paddleWidth > canvas.width) {
+      newPaddle.paddleX = canvas.width - newPaddle.paddleWidth;
     }
-    drawPaddle();
+    // drawPaddle();
   } else if (leftPressed) {
-    paddleX -= 7;
-    if (paddleX < 0) {
-      paddleX = 0;
+    newPaddle.paddleX -= 7;
+    if (newPaddle.paddleX < 0) {
+      newPaddle.paddleX = 0;
     }
-    drawPaddle();
+    // drawPaddle();
   }
 }
 
@@ -231,7 +239,7 @@ function collisionMovement() {
       // decrement lives and checking to see if lives == 0 then GAME OVER or reset
       lives -= 1;
       if (!lives) {
-        alert('GAME OVER');
+        alert(`GAME OVER SCORE: ${score}`);
         document.location.reload();
         // clearInterval(interval); // Needed for Chrome to end game
       } else {
@@ -271,7 +279,7 @@ function draw() {
   // }
   collisionMovement();
 
-  // changePaddleDirection();
+  changePaddleDirection();
 
   // this continues with animation else commented out will just draw once
   requestAnimationFrame(draw);
