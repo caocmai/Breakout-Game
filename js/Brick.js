@@ -1,17 +1,90 @@
-import Sprite from './Sprite.js';
-
-class Brick extends Sprite {
-  constructor(x, y, brickWidth, brickHeight, color, status) {
-    super(x, y);
+class Brick {
+  constructor(brickWidth, brickHeight, status, brickColumnCount,
+    brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop) {
+    // super(x, y);
     this.brickWidth = brickWidth;
     this.brickHeight = brickHeight;
-    this.color = color;
-    this.status = status;
+    // this.color = color;
+    // this.status = status;
+
+    this.bricks = [];
+
+    this.brickColumnCount = brickColumnCount;
+    this.brickRowCount = brickRowCount;
+    // this.brickPadding = brickPadding;
+    // this.brickOffsetLeft = brickOffsetLeft;
+    // this.brickOffsetTop = brickOffsetTop;
+
+    for (let c = 0; c < brickColumnCount; c += 1) {
+      this.bricks[c] = [];
+      for (let r = 0; r < brickRowCount; r += 1) {
+        // bricks[c][r] = { x: 0, y: 0 };
+        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+        let color;
+        switch (r) {
+          case 1:
+            color = '#7a1777';
+            break;
+          case 2:
+            color = '#ba254d';
+            break;
+          case 3:
+            color = '#3d34bf';
+            break;
+          default:
+            color = '#0095DD';
+        }
+        this.bricks[c][r] = {
+          x: brickX,
+          y: brickY,
+          brickWidth,
+          brickHeight,
+          color,
+          status,
+        };
+      }
+    }
   }
 
-  render(ctx, color) {
+  render(ctx) {
+    for (let c = 0; c < this.brickColumnCount; c += 1) {
+      for (let r = 0; r < this.brickRowCount; r += 1) {
+        // only draw bricks with status as 1
+        // console.log('status', this.bricks[c][r].status)
+        
+        if (this.bricks[c][r].status === 3) {
+           this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, this.bricks[c][r].color);
+
+          // ctx.beginPath();
+          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+          // ctx.fillStyle = bricks[c][r].color;
+          // ctx.fill();
+          // ctx.closePath();
+        } else if (this.bricks[c][r].status === 2) {
+          this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, '#eb4034');
+
+          // ctx.beginPath();
+          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+          // ctx.fillStyle = '#eb4034';
+          // ctx.fill();
+          // ctx.closePath();
+        } else if (this.bricks[c][r].status === 1) {
+          this.renderHelper(ctx, this.bricks[c][r].x, this.bricks[c][r].y, '#f5e642');
+
+          // ctx.beginPath();
+          // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
+          // ctx.fillStyle = '#f5e642';
+          // ctx.fill();
+          // ctx.closePath();
+        }
+      }
+    }
+  }
+
+  renderHelper(ctx, x, y, color) {
     ctx.beginPath();
-    ctx.rect(this.x, this.y, this.brickWidth, this.brickHeight);
+    ctx.rect(x, y, this.brickWidth, this.brickHeight);
     ctx.fillStyle = color;
     ctx.fill();
     ctx.closePath();

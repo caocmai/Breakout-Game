@@ -1,9 +1,11 @@
 import Sprite from './Sprite.js';
 
 class Ball extends Sprite {
-  constructor(radius, x, y) {
+  constructor(radius, x, y, dx, dy) {
     super(x, y);
     this.radius = radius;
+    this.dx = dx;
+    this.dy = dy;
   }
 
   render(ctx) {
