@@ -40,42 +40,6 @@ let rightPressed = false;
 let leftPressed = false;
 
 /*
-  INITIALIZATION
-*/
-// for (let c = 0; c < brickColumnCount; c += 1) {
-//   bricks[c] = [];
-//   for (let r = 0; r < brickRowCount; r += 1) {
-//     // bricks[c][r] = { x: 0, y: 0 };
-//     const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-//     const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-//     let color;
-//     switch (r) {
-//       case 1:
-//         color = '#7a1777';
-//         break;
-//       case 2:
-//         color = '#ba254d';
-//         break;
-//       case 3:
-//         color = '#3d34bf';
-//         break;
-//       default:
-//         color = '#0095DD';
-//     }
-//     // bricks[c][r] = {
-//     //   x: brickX,
-//     //   y: brickY,
-//     //   brickWidth,
-//     //   brickHeight,
-//     //   color,
-//     //   status: 3,
-//     // };
-
-//     bricks[c][r] = new Brick(brickX, brickY, brickWidth, brickHeight, color, 3);
-//   }
-// }
-
-/*
   FUNCTIONS
 */
 
@@ -83,68 +47,8 @@ const newClassBall = new Ball(ballRadius, x, y, dx, dy);
 const newClassPaddle = new Paddle(paddleWidth, paddleHeight, canvas.height, paddleX);
 const newClassLives = new Lives(canvas.width - 65, 20, 3);
 const newClassScore = new Score(8, 20, 0);
-const newClassBricks = new Brick(brickWidth, brickHeight, 3, brickColumnCount, brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop);
-
-// draws/redraws bricks based on wether ball has hit block
-// function drawBricks() {
-//   for (let c = 0; c < brickColumnCount; c += 1) {
-//     for (let r = 0; r < brickRowCount; r += 1) {
-//       // only draw bricks with status as 1
-//       if (bricks[c][r].status === 3) {
-//         bricks[c][r].render(ctx, bricks[c][r].color);
-
-//         // ctx.beginPath();
-//         // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-//         // ctx.fillStyle = bricks[c][r].color;
-//         // ctx.fill();
-//         // ctx.closePath();
-//       } else if (bricks[c][r].status === 2) {
-//         bricks[c][r].render(ctx, '#eb4034');
-
-//         // ctx.beginPath();
-//         // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-//         // ctx.fillStyle = '#eb4034';
-//         // ctx.fill();
-//         // ctx.closePath();
-//       } else if (bricks[c][r].status === 1) {
-//         bricks[c][r].render(ctx, '#f5e642');
-
-//         // ctx.beginPath();
-//         // ctx.rect(bricks[c][r].x, bricks[c][r].y, bricks[c][r].brickWidth, bricks[c][r].brickHeight);
-//         // ctx.fillStyle = '#f5e642';
-//         // ctx.fill();
-//         // ctx.closePath();
-//       }
-//     }
-//   }
-// }
-
-// draw score
-// function drawScore() {
-//   ctx.font = '16px Arial';
-//   ctx.fillStyle = '#0095DD';
-//   ctx.fillText(`Score: ${score}`, 8, 20);
-// }
-
-// draw lives
-// function drawLives() {
-//   ctx.font = '16px Arial';
-//   ctx.fillStyle = '#0095DD';
-//   ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
-// }
-
-// function drawPaddle() {
-//   ctx.beginPath();
-//   ctx.rect(
-//     paddleX,
-//     canvas.height - paddleHeight,
-//     paddleWidth,
-//     paddleHeight,
-//   );
-//   ctx.fillStyle = `#eb403${paddleX + 10}`;
-//   ctx.fill();
-//   ctx.closePath();
-// }
+const newClassBricks = new Brick(brickWidth, brickHeight, 3, brickColumnCount,
+  brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop);
 
 // add mouse listening event and other events
 function mouseMoveHandler(e) {
@@ -174,15 +78,6 @@ function keyUpHandler(e) {
 document.addEventListener('mousemove', mouseMoveHandler, false);
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
-
-// draw the ball with specified x and y starting position
-// function drawBall() {
-//   ctx.beginPath();
-//   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-//   ctx.fillStyle = '#2ab855';
-//   ctx.fill();
-//   ctx.closePath();
-// }
 
 // collision detection
 function collisionDetection() {
