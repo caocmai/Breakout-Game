@@ -1,4 +1,4 @@
-class Brick {
+class Bricks {
   constructor(brickWidth, brickHeight, status, brickColumnCount,
     brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop) {
     this.brickWidth = brickWidth;
@@ -66,4 +66,4 @@ class Brick {
   }
 }
 
-export default Brick;
+export default Bricks;

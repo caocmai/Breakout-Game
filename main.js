@@ -1,6 +1,6 @@
 import Ball from './js/Ball.js';
 import Paddle from './js/Paddle.js';
-import Brick from './js/Brick.js';
+import Bricks from './js/Bricks.js';
 import Lives from './js/Lives.js';
 import Score from './js/Score.js';
 
@@ -17,7 +17,6 @@ const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
-const bricks = [];
 // paddle properties and draw function
 const paddleHeight = 10;
 const paddleWidth = 75;
@@ -28,27 +27,25 @@ const ballRadius = 10;
 */
 
 // ball position
-let x = canvas.width / 2;
-let y = canvas.height - 30;
+const x = canvas.width / 2;
+const y = canvas.height - 30;
 // the amount of x, y change(for coornations)
-let dx = 4;
-let dy = 4;
-let score = 0;
-let lives = 5;
-let paddleX = (canvas.width - paddleWidth) / 2;
+const dx = 4;
+const dy = 4;
+const paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
+
+const newClassBall = new Ball(ballRadius, x, y, dx, dy);
+const newClassPaddle = new Paddle(paddleWidth, paddleHeight, canvas.height, paddleX);
+const newClassLives = new Lives(canvas.width - 65, 20, 5);
+const newClassScore = new Score(8, 20, 0);
+const newClassBricks = new Bricks(brickWidth, brickHeight, 3, brickColumnCount,
+  brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop);
 
 /*
   FUNCTIONS
 */
-
-const newClassBall = new Ball(ballRadius, x, y, dx, dy);
-const newClassPaddle = new Paddle(paddleWidth, paddleHeight, canvas.height, paddleX);
-const newClassLives = new Lives(canvas.width - 65, 20, 3);
-const newClassScore = new Score(8, 20, 0);
-const newClassBricks = new Brick(brickWidth, brickHeight, 3, brickColumnCount,
-  brickRowCount, brickPadding, brickOffsetLeft, brickOffsetTop);
 
 // add mouse listening event and other events
 function mouseMoveHandler(e) {
@@ -135,7 +132,7 @@ function collisionMovement() {
   if (newClassBall.y + newClassBall.dy < ballRadius) {
     newClassBall.dy = -newClassBall.dy;
   } else if (newClassBall.y + newClassBall.dy > canvas.height - ballRadius) {
-    if (newClassBall.x > newClassPaddle.paddleX 
+    if (newClassBall.x > newClassPaddle.paddleX
       && newClassBall.x < newClassPaddle.paddleX + newClassPaddle.paddleWidth) {
       newClassBall.dy = -newClassBall.dy;
     } else {
@@ -165,16 +162,10 @@ function draw() {
   // clear frame before next drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   newClassBall.render(ctx);
-  // drawBall();
-  // drawPaddle();
   newClassPaddle.render(ctx);
-  // drawBricks();
   collisionDetection();
-  // drawScore();
-  // drawLives();
   newClassLives.render(ctx);
   newClassScore.render(ctx);
-  // console.log(newClassBall.dx, newClassBall.dy)
 
   // if (y + dy > canvas.height || y + dy < 0) {
   //   dy = -dy;
@@ -185,7 +176,6 @@ function draw() {
   // }
   collisionMovement();
   newClassBricks.render(ctx);
-
   changePaddleDirection();
 
   // this continues with animation else commented out will just draw once
