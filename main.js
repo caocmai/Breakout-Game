@@ -1,8 +1,8 @@
-import Ball from './js/Ball.js';
-import Paddle from './js/Paddle.js';
-import Bricks from './js/Bricks.js';
-import Lives from './js/Lives.js';
-import Score from './js/Score.js';
+import Ball from './src/Ball.js';
+import Paddle from './src/Paddle.js';
+import Bricks from './src/Bricks.js';
+import Lives from './src/Lives.js';
+import Score from './src/Score.js';
 
 /*
   CONSTANTS
